@@ -1,10 +1,10 @@
-package com.kjjeon.moviepresenter.presenter
+package com.kjjeon.moviepresenter.presenter.home
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.kjjeon.moviepresenter.R
+import com.kjjeon.moviepresenter.presenter.base.BaseActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
