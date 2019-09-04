@@ -1,7 +1,7 @@
 package com.kjjeon.moviepresenter
 
 import android.app.Application
-import com.kjjeon.moviepresenter.di.netModle
+import com.kjjeon.moviepresenter.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -17,8 +17,11 @@ class App : Application() {
             // declare modules to use
             modules(
                 listOf(
-                    netModle
-                   )
+                    netModule,
+                    presenterModule,
+                    repositoryModule,
+                    useCaseModule
+                )
             )
         }
     }

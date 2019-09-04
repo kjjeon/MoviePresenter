@@ -51,6 +51,7 @@ dependencies {
     // Koin Android Experimental features
     implementation "org.koin:koin-androidx-ext:$koin_version"
     implementation "org.koin:koin-java:$koin_version"
+    testImplementation "org.koin:koin-test:$koin_version"
 
     //glide
     implementation 'com.github.bumptech.glide:glide:4.9.0'
