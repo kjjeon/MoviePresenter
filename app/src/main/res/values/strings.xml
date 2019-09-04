@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MoviePresenter</string>
+    <string name="menu_search">Search</string>
 </resources>

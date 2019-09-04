@@ -53,7 +53,7 @@ class ExampleUnitTest {
         //then
         getCardUseCase(keyword)
             .test()
-            .awaitDone(3, TimeUnit.SECONDS)
+            .awaitDone(1, TimeUnit.SECONDS)
             .assertValue {
                 it.last().title == "<b>타짜</b>"
             }
@@ -75,7 +75,7 @@ class ExampleUnitTest {
         //then
         getCardUseCase(keyword)
             .test()
-            .awaitDone(3, TimeUnit.SECONDS)
+            .awaitDone(1, TimeUnit.SECONDS)
             .assertError { error ->
                 error is HttpException && error.code() == 400 // Bad Request
             }
