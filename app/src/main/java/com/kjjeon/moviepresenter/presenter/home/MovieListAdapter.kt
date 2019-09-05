@@ -9,9 +9,9 @@ import com.bumptech.glide.Glide
 import com.kjjeon.moviepresenter.R
 import com.kjjeon.moviepresenter.domain.model.Card
 import kotlinx.android.synthetic.main.menu_movie_card.view.*
-import java.math.RoundingMode
 
-class MovieListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MovieListAdapter
+ : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var movies: List<Card> = emptyList()
 
@@ -29,14 +29,14 @@ class MovieListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int = movies.size
 
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = movies[position]
 
         holder.itemView.run {
-            //TODO: cache
             Glide.with(this)
                 .load(item.image)
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.drawable.terrain_black)
                 .fitCenter()
                 .into(image)
 

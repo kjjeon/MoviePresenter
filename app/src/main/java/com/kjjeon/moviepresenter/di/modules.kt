@@ -3,6 +3,7 @@ package com.kjjeon.moviepresenter.di
 import com.kjjeon.moviepresenter.data.movie.MovieRepository
 import com.kjjeon.moviepresenter.data.service.SearchMovieService
 import com.kjjeon.moviepresenter.domain.movie.GetCardUseCase
+import com.kjjeon.moviepresenter.presenter.custom.EndlessRecyclerViewScrollListener
 import com.kjjeon.moviepresenter.presenter.home.MainViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -17,10 +18,10 @@ val netModule: Module = module {
     single {
         Retrofit.Builder()
             .baseUrl("https://openapi.naver.com")
-            .client(
-                OkHttpClient.Builder().addInterceptor(
-                    HttpLoggingInterceptor().setLevel(
-                        HttpLoggingInterceptor.Level.HEADERS)).build())
+//            .client(
+//                OkHttpClient.Builder().addInterceptor(
+//                    HttpLoggingInterceptor().setLevel(
+//                        HttpLoggingInterceptor.Level.HEADERS)).build())
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()

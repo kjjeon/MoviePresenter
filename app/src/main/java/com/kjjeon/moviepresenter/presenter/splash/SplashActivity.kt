@@ -10,12 +10,15 @@ import com.kjjeon.moviepresenter.presenter.base.BaseActivity
 import com.kjjeon.moviepresenter.presenter.home.MainActivity
 import io.reactivex.Completable
 import kotlinx.android.synthetic.main.activity_splash.*
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        Timber.plant(Timber.DebugTree())
 
         Glide.with(this)
             .asBitmap()

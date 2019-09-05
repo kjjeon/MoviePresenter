@@ -14,6 +14,7 @@ interface SearchMovieService {
     )
     @GET("v1/search/movie.json")
     fun getSearch(
-        @Query("query") query: String
+        @Query("query") query: String,
+        @Query("start") start: Int
     ): Single<Movies>
 }

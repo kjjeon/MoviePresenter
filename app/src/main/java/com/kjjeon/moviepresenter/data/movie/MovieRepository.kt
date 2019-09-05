@@ -6,5 +6,7 @@ import io.reactivex.schedulers.Schedulers
 class MovieRepository(
     private val searchMovieService: SearchMovieService
 ) {
-    fun get(query: String) = searchMovieService.getSearch(query).subscribeOn(Schedulers.io())
+    fun get(query: String,start: Int) = searchMovieService
+        .getSearch(query,start)
+        .subscribeOn(Schedulers.io())
 }

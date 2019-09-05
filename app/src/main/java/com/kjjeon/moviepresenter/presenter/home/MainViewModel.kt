@@ -9,18 +9,19 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 class MainViewModel(
     private val getCardUseCase: GetCardUseCase
 ) : BaseViewModel() {
+    private lateinit var keyword: String
+    var cardListLiveData = MutableLiveData<Pair<Int, List<Card>>>()
 
-    var cardListLiveData = MutableLiveData<List<Card>>()
-
-    fun query(keyword: String) {
-        getCardUseCase(keyword)
+    fun newQuery(keyword: String) {
+        this.keyword = keyword
+        getCardUseCase.newQuery(keyword)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { t1, _ -> cardListLiveData.value = t1  }.drop()
+            .subscribe { t1 -> cardListLiveData.value = 1 to t1  }.drop()
     }
 
-    fun test() {
-        getCardUseCase("타짜")
+    fun queryNext(page: Int) {
+        getCardUseCase.queryNext(page)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { t1, _ -> cardListLiveData.value = t1  }.drop()
+            .subscribe { t1 -> cardListLiveData.value = page to t1  }.drop()
     }
 }

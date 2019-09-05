@@ -1,17 +1,18 @@
 package com.kjjeon.moviepresenter.presenter.home
 
 import android.os.Bundle
-import android.util.Log
 import com.kjjeon.moviepresenter.databinding.ActivityMainBinding
 import com.kjjeon.moviepresenter.presenter.base.BaseActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.view.Menu
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.widget.SearchView
-import com.kjjeon.moviepresenter.R
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.kjjeon.moviepresenter.extension.observe
-
-
+import androidx.recyclerview.widget.RecyclerView
+import com.kjjeon.moviepresenter.R
+import com.kjjeon.moviepresenter.presenter.custom.EndlessRecyclerViewScrollListener
+import timber.log.Timber
 
 
 class MainActivity : BaseActivity() {
@@ -21,6 +22,8 @@ class MainActivity : BaseActivity() {
         ActivityMainBinding.inflate(layoutInflater, null, true)
     }
     private val adapter: MovieListAdapter by lazy { dataBinding.list.adapter as MovieListAdapter }
+    private lateinit var endlessRecyclerViewScrollListener : EndlessRecyclerViewScrollListener
+
 //    private val movieListAdapter by lazy { MovieListAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,12 +32,20 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(dataBinding.toolbar)
 //        supportActionBar?.setDisplayShowTitleEnabled(false)
         dataBinding.viewModel = mainViewModel
+
+        endlessRecyclerViewScrollListener = object :  EndlessRecyclerViewScrollListener(
+            dataBinding.list.layoutManager as LinearLayoutManager) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+                Timber.d("page = $page , totalItemsCount = $totalItemsCount, RecyclerView = $view")
+                mainViewModel.queryNext(page)
+            }
+        }
+        dataBinding.list.addOnScrollListener(endlessRecyclerViewScrollListener)
         dataBinding.list.adapter = MovieListAdapter()
 
-        mainViewModel.test()
         mainViewModel.cardListLiveData.observe(this) {
-            Log.d("AA","m = $it")
-            adapter.set(it)
+            Timber.d("cardListLiveData = $it")
+            adapter.set(it.second)
         }
     }
 
@@ -54,7 +65,8 @@ class MainActivity : BaseActivity() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
-                    mainViewModel.query(it)
+                    endlessRecyclerViewScrollListener.resetState()
+                    mainViewModel.newQuery(it)
                 }
                 return true
             }
@@ -65,6 +77,8 @@ class MainActivity : BaseActivity() {
         })
         return true
     }
+
+
 
 
 }
